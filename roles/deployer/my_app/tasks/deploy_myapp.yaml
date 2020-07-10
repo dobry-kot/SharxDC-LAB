@@ -6,30 +6,30 @@
         repo: "{{ repo_app }}"
         dest: /tmp/builds/myapp
 
-    - name: LOGIN IN DOCKER.
-      docker_login:
-        registry: "{{ docker_registry }}"
-        username: "{{ docker_login }}"
-        password: "{{ docker_password }}"
-        reauthorize: yes
+    # - name: LOGIN IN DOCKER.
+    #   docker_login:
+    #     registry: "{{ docker_registry }}"
+    #     username: "{{ docker_login }}"
+    #     password: "{{ docker_password }}"
+    #     reauthorize: yes
 
     - name: BUILD ADN PUSH DOCKER IMG.
       docker_image:
-        name: dobrykot/myapp
+        name: myapp
         build:
           path: /tmp/builds/myapp/roles/deployer/my_app/files/source_code
         source: build
         tag: v.0.0.1 
-        push: yes
+        # push: yes
 
-    - name: PULL DOCKER IMG WITH <myapp>
-      docker_image:
-        name: dobrykot/myapp:v.0.0.1
+    # - name: PULL DOCKER IMG WITH <myapp>
+    #   docker_image:
+    #     name: dobrykot/myapp:v.0.0.1
 
     - name: RUN CONTAINER WITH <myapp>
       docker_container:
         name: mayapp
-        image: dobrykot/myapp:v.0.0.1
+        image: myapp:v.0.0.1
         ports: '{{ ansible_default_ipv4.address }}:8081:64500'
         env:
             TZ: 'Europe/Moscow'
