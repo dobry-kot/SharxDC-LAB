@@ -2,6 +2,7 @@
 - name: DOCKER CONFIGURATION.
   hosts: docker_nodes
   become: true
+  gather_facts: true
   vars_files:
     - ../secrets.yaml
   roles:
