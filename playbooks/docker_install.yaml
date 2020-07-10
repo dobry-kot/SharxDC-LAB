@@ -2,7 +2,8 @@
 - name: DOCKER CONFIGURATION.
   hosts: docker_nodes
   become: true
-
+  vars_files:
+    - ../secrets.yaml
   roles:
     # - {role: basic/install_default_packages, tags: install_default_packages}
     # - {role: docker_install, tags: docker_install}

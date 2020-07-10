@@ -1,13 +1,3 @@
-- git:
-    repo: 'https://github.com/dobry-kot/SharxDC-LAB.git'
-    dest: /tmp/test
-
-
-# - name: Build image and with build args
-#   docker_image:
-#     name: myapp
-#     build:
-#       path: /tmp/SharxDC-LAB
-#       args:
-#         listen_port: 64500
-#     source: build
+---
+- name: INCLUDE MODULE FOR DEPLOYING <myapp>.
+  include: deploy_myapp.yaml
