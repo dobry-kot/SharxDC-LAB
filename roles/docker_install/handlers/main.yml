@@ -1,6 +1,0 @@
----
-- name: restarted docker
-  service:
-    name: docker
-    state: restarted
-    enabled: yes

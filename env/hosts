@@ -1,5 +1,5 @@
 [docker_nodes]
-laba.adeq-inm.local
+laba2.adeq-inm.local
 
 [all:children]
 docker_nodes

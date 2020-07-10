@@ -30,8 +30,7 @@
         - docker-ce-cli
         - containerd.io
       register: docker_install_status
-      notify: restarted docker
-
+      
     - name: install the package, force upgrade
       pip:
         name: pip
@@ -43,6 +42,13 @@
         name: ['requests', 'urllib3','docker-compose']
         state: latest
         extra_args: "--ignore-installed"
+
+    - name: restarted docker
+      service:
+        name: docker
+        state: restarted
+        enabled: yes
+      when: docker_install_status.changed == true
 
   become: true
 
@@ -61,5 +67,13 @@
 
   become: true
 
-- debug:
-    msg: "{{ansible_facts}}"
+- name: BLOCK FOR CLEANING CACHE.
+  block:
+    - name: YUM CLEAN METADATA.
+      command: 
+        cmd: yum clean all 
+
+    - name: DELETE CACHE FOLDER.
+      file:
+        path: "{{ cache_path[ansible_facts['distribution_file_variety'] | lower] }}"
+        state: absent
