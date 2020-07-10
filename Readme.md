@@ -39,5 +39,5 @@ Ansible.
 ## Запуск плейбука.
 ```
 Т.к часть серкретов от регистри упаковал в ansible-vault запускать требуется так.
-ansible-playbook playbooks/docker_install.yaml --ask-vault-pass
+ansible-playbook playbooks/docker_install.yaml
 ```
