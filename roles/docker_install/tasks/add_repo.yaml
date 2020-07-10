@@ -1,0 +1,10 @@
+---
+- name: ADDING REPOSYTORY < docker-engine.repo >.
+  template:
+    src: docker-engine.repo.j2
+    dest: "{{ repo_path[ ansible_facts['distribution_file_variety'] | lower ] }}/docker-ce.repo"
+    owner: root
+    group: root
+    mode: 0644
+  when: ansible_facts['distribution'] | lower == 'centos'
+

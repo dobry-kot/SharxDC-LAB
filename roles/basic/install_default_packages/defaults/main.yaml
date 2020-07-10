@@ -1,0 +1,10 @@
+default_pachages:
+  redhat:
+    - git
+    - python-pip
+    - curl
+    - wget
+    - vim
+
+cache_path:
+  redhat: /var/cache/yum

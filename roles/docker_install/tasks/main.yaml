@@ -1,0 +1,6 @@
+---
+- name: INCLUDE MODULE FOR ADDING DOCKER REPO.
+  include: add_repo.yaml
+
+- name: INCLUDE MODULE FOR INSTALL DOCKER.
+  include: install_docker.yaml

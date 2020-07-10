@@ -1,0 +1,65 @@
+---
+- name: Upgrade all packages to the latest version
+  package:
+    name: '*'
+    state: latest
+    update_cache: yes
+
+- name: BLOCK DOCKER INSTALL.
+  block:
+    - name: REMOVE DOCKER WITH DEPENDENCES.
+      package:
+        name: "{{ item }}"
+        state: absent
+      with_items:  # Требуется ли обновление существующих версий докера?
+        - docker
+        - docker-client
+        - docker-client-latest
+        - docker-common
+        - docker-latest
+        - docker-latest-logrotate
+        - docker-logrotate
+        - docker-engine
+
+    - name: INSTALL DOCKER PKG.
+      package:
+        name: "{{ item }}"
+        state: latest
+      with_items: 
+        - docker-ce
+        - docker-ce-cli
+        - containerd.io
+      register: docker_install_status
+      notify: restarted docker
+
+    - name: install the package, force upgrade
+      pip:
+        name: pip
+        executable: pip
+        state: latest
+
+    - name: INSTALLING PYTHON PKG FOR DOCKER MANAGMENT.
+      pip:
+        name: ['requests', 'urllib3','docker-compose']
+        state: latest
+        extra_args: "--ignore-installed"
+
+  become: true
+
+- name: BLOCK ADD USERS TO GROUP DOCKER. 
+  block:
+    - name: CREATE DOCKER GROUP.
+      group:
+        name: docker
+        state: present
+
+    - name: ADD USERS IN TO DOCKER GROUP.
+      user:
+        name: "{{ item }}"
+        groups: docker
+      with_items: "{{ docker_users }}"
+
+  become: true
+
+- debug:
+    msg: "{{ansible_facts}}"

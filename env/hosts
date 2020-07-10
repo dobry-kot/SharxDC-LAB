@@ -1,0 +1,8 @@
+[docker_nodes]
+laba.adeq-inm.local
+
+[all:children]
+docker_nodes
+
+[all:vars]
+ansible_user = dk

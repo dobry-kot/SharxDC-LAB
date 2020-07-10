@@ -1,0 +1,16 @@
+repo_path:
+  redhat: /etc/yum.repos.d
+
+cache_path:
+  redhat: /var/cache/yum
+
+docker_users:
+  - terra
+
+default_pachages:
+  redhat:
+    - git
+    - python-pip
+    - curl
+    - wget
+    - vim

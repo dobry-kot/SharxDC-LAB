@@ -1,0 +1,9 @@
+
+- name: DOCKER CONFIGURATION.
+  hosts: docker_nodes
+  become: true
+
+  roles:
+    # - {role: basic/install_default_packages, tags: install_default_packages}
+    # - {role: docker_install, tags: docker_install}
+    - {role: deployer/my_app, tags: my_app}

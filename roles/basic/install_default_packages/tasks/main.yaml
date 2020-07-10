@@ -1,0 +1,31 @@
+---
+- name: INSTALL DEFAULT PACKAGES ON OS.
+  block:
+    - name: UPDATE REPO CACHE.
+      package:
+        name: '*'
+        state: latest
+        update_cache: yes
+      register: update_cache_status
+
+    - name: INSTALL DEFAULT PACKAGES.
+      package:
+        name: "{{ item }}"
+        state: latest
+      with_items: "{{ default_pachages[ ansible_facts['distribution_file_variety'] | lower ] }}"
+    
+    - name: BLOCK FOR CLEANING CACHE.
+      block:
+        - name: YUM CLEAN METADATA.
+          command: 
+            cmd: yum clean all 
+
+        - name: DELETE CACHE FOLDER.
+          file:
+            path: "{{ cache_path[ansible_facts['distribution_file_variety'] | lower] }}"
+            state: absent
+      when: update_cache_status.changed == true
+
+  become: true
+ 
+
